@@ -32,10 +32,10 @@ sudo -u postgres psql -c "ALTER USER django WITH PASSWORD 'django'"
 
 # Creamos el usuario del sistema
 sudo adduser --system --quiet --shell=/bin/bash --home=/home/django --gecos 'django' --group django
-gpasswd -a django sudo
+sudo gpasswd -a django sudo
 
 echo "==10== Creamos el entorno virtual === "
-virtualenv /home/django/.venv --python=python3
+python -m venv /home/django/.venv --python=python3
 source /home/django/.venv/bin/activate
 
 echo "==11== Creamos el entorno virtual === "
