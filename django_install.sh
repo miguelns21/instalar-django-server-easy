@@ -88,16 +88,16 @@ chmod u+x /home/$usuario/.venv/bin/gunicorn_start
 echo "==16== Configurando Supervisor === "
 mkdir /home/$usuario/logs
 touch /home/$usuario/logs/gunicorn-error.log
-sudo touch /etc/supervisor/conf.d/django_app.conf
-sudo echo '[program:django_app]' >> /etc/supervisor/conf.d/django_app.conf
-sudo echo 'command=/home/$usuario/.venv/bin/gunicorn_start' >> /etc/supervisor/conf.d/django_app.conf
-sudo echo 'user=$usuario' >> /etc/supervisor/conf.d/django_app.conf
-sudo echo 'autostart=true' >> /etc/supervisor/conf.d/django_app.conf
-sudo echo 'autorestart=true' >> /etc/supervisor/conf.d/django_app.conf
-sudo echo 'redirect_stderr=true' >> /etc/supervisor/conf.d/django_app.conf
-sudo echo 'stdout_logfile=/home/$usuario/logs/gunicorn-error.log' >> /etc/supervisor/conf.d/django_app.conf
-sudo supervisorctl reread
-sudo supervisorctl update
+superapp=/home/$usuario/django_app.conf
+touch $superapp
+echo '[program:django_app]' >> $superapp
+echo 'command=/home/$usuario/.venv/bin/gunicorn_start' >> $superapp
+echo 'user=$usuario' >> $superapp
+echo 'autostart=true' >> $superapp
+echo 'autorestart=true' >> $superapp
+echo 'redirect_stderr=true' >> $superapp
+echo 'stdout_logfile=/home/$usuario/logs/gunicorn-error.log' >> $superapp
+sudo cp $superapp /etc/supervisor/conf.d/django_app.conf
 
 echo "==17== Configurando Nginx ==="
 sudo touch /etc/nginx/sites-available/django_app
