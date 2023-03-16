@@ -29,7 +29,7 @@ sudo apt-get -qq install python3-venv python3-pip
 echo "==9== Configuramos PostgreSQL: === "
 sudo su - postgres -c "createuser -s "$usuario
 sudo su - postgres -c "createdb django_prod --owner "$usuario
-sudo -u postgres psql -c "ALTER USER django WITH PASSWORD ''$usuario''"
+sudo -u postgres psql -c "ALTER USER $usuario WITH PASSWORD '$usuario'"
 
 # Creamos el usuario del sistema
 # sudo adduser --system --quiet --shell=/bin/bash --home=/home/django --gecos 'django' --group django
