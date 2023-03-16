@@ -115,7 +115,7 @@ echo '    # add here the ip address of your server'  >> $ngxapp
 echo '    # or a domain pointing to that ip (like example.com or www.example.com)'  >> $ngxapp
 read -p 'Indique la IP del servidor: ' serverip
 echo '    server_name '$serverip';' >> $ngxapp
-echo '' >> >> $ngxapp
+echo '' >> $ngxapp
 echo '    keepalive_timeout 5;' >> $ngxapp
 echo '    client_max_body_size 4G;' >> $ngxapp
 echo '' >> $ngxapp
