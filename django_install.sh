@@ -22,7 +22,7 @@ echo "==7== Iniciamos Supervisor: === "
 sudo systemctl enable supervisor
 sudo systemctl start supervisor
 
-echo "==8== Instalamos python-virtualenv: === "
+echo "==8== Instalamos  python3-venv: === "
 sudo apt-get -qq install python3-venv
 
 echo "==9== Configuramos PostgreSQL: === "
