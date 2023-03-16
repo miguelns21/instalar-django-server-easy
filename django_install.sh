@@ -54,33 +54,35 @@ pip install -q -r /home/$usuario/$project/requirements.txt
 echo "==14== Instalamos Gunicorn === "
 pip install -q gunicorn
 
-touch /home/$usuario/.venv/bin/gunicorn_start
-chmod u+x /home/$usuario/.venv/bin/gunicorn_start
-echo '#!/bin/bash' >> /home/$usuario/.venv/bin/gunicorn_start
-echo '' >> /home/$usuario/.venv/bin/gunicorn_start
-echo 'NAME="django_app"' >> /home/$usuario/.venv/bin/gunicorn_start
-echo 'DIR=/home/'$usuario'/'$project >> /home/$usuario/.venv/bin/gunicorn_start
-echo 'USER='$usuario >> /home/$usuario/.venv/bin/gunicorn_start
-echo 'GROUP='$usuario >> /home/$usuario/.venv/bin/gunicorn_start
-echo 'WORKERS=3' >> /home/$usuario/.venv/bin/gunicorn_start
-echo 'BIND=unix:/home/'$usuario'/gunicorn.sock' >> /home/$usuario/.venv/bin/gunicorn_start
-echo 'DJANGO_SETTINGS_MODULE='$djapp'.settings' >> /home/$usuario/.venv/bin/gunicorn_start
-echo 'DJANGO_WSGI_MODULE='$djapp'.wsgi' >> /home/$usuario/.venv/bin/gunicorn_start
-echo 'LOG_LEVEL=error' >> /home/$usuario/.venv/bin/gunicorn_start
-echo '' >> /home/$usuario/.venv/bin/gunicorn_start
-echo 'source /home/'$usuario'/.venv/bin/activate' >> /home/$usuario/.venv/bin/gunicorn_start
-echo '' >> /home/$usuario/.venv/bin/gunicorn_start
-echo 'export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE' >> /home/$usuario/.venv/bin/gunicorn_start
-echo 'export PYTHONPATH=$DIR:$PYTHONPATH' >> /home/$usuario/.venv/bin/gunicorn_start
-echo '' >> /home/$usuario/.venv/bin/gunicorn_start
-echo 'exec /home/'$usuario'/.venv/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \' >> /home/$usuario/.venv/bin/gunicorn_start
-echo '  --name $NAME \' >> /home/django/.venv/bin/gunicorn_start
-echo '  --workers $WORKERS \' >> /home/$usuario/.venv/bin/gunicorn_start
-echo '  --user=$USER \' >> /home/$usuario/.venv/bin/gunicorn_start
-echo '  --group=$GROUP \' >> /$usuario/django/.venv/bin/gunicorn_start
-echo '  --bind=$BIND \' >> /home/$usuario/.venv/bin/gunicorn_start
-echo '  --log-level=$LOG_LEVEL \' >> /home/$usuario/.venv/bin/gunicorn_start
-echo '  --log-file=-' >> /home/$usuario/.venv/bin/gunicorn_start
+guni=/home/$usuario/.venv/bin/gunicorn_start
+
+touch $guni
+chmod u+x $guni
+echo '#!/bin/bash' > $guni
+echo '' >> $guni
+echo 'NAME="django_app"' >> $guni
+echo 'DIR=/home/'$usuario'/'$project >> $guni
+echo 'USER='$usuario >> $guni
+echo 'GROUP='$usuario >> $guni
+echo 'WORKERS=3' >> $guni
+echo 'BIND=unix:/home/'$usuario'/gunicorn.sock' >> $guni
+echo 'DJANGO_SETTINGS_MODULE='$djapp'.settings' >> $guni
+echo 'DJANGO_WSGI_MODULE='$djapp'.wsgi' >> $guni
+echo 'LOG_LEVEL=error' >> $guni
+echo '' >> $guni
+echo 'source /home/'$usuario'/.venv/bin/activate' >> $guni
+echo '' >> $guni
+echo 'export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE' >> $guni
+echo 'export PYTHONPATH=$DIR:$PYTHONPATH' >> $guni
+echo '' >> $guni
+echo 'exec /home/'$usuario'/.venv/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \' >> $guni
+echo '  --name $NAME \' >> $guni
+echo '  --workers $WORKERS \' >> $guni
+echo '  --user=$USER \' >> $guni
+echo '  --group=$GROUP \' >> $guni
+echo '  --bind=$BIND \' >> $guni
+echo '  --log-level=$LOG_LEVEL \' >> $guni
+echo '  --log-file=-' >> $guni
 
 echo "==15== Convertimos a Ejecutable el Fichero: gunicorn_start === "
 chmod u+x /home/$usuario/.venv/bin/gunicorn_start
