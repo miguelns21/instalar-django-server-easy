@@ -88,8 +88,8 @@ echo "==15== Convertimos a Ejecutable el Fichero: gunicorn_start === "
 chmod u+x /home/$usuario/.venv/bin/gunicorn_start
 
 echo "==16== Configurando Supervisor === "
-mkdir /home/$usuario/logs
-touch /home/$usuario/logs/gunicorn-error.log
+mkdir /home/$usuario/$project/logs
+touch /home/$usuario/$project/logs/gunicorn-error.log
 superapp=/home/$usuario/django_app.conf
 touch $superapp
 echo '[program:django_app]' >> $superapp
@@ -98,7 +98,7 @@ echo 'user=$usuario' >> $superapp
 echo 'autostart=true' >> $superapp
 echo 'autorestart=true' >> $superapp
 echo 'redirect_stderr=true' >> $superapp
-echo 'stdout_logfile=/home/'$usuario'/logs/gunicorn-error.log' >> $superapp
+echo 'stdout_logfile=/home/'$usuario'/'$project/logs/gunicorn-error.log' >> $superapp
 sudo cp $superapp /etc/supervisor/conf.d/django_app.conf
 
 echo "==17== Configurando Nginx ==="
