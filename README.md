@@ -1,5 +1,9 @@
 # Instalando Django Easy
 
+Partimos de un VPS o máquina con Ubuntu server instalada.
+
+Ejecutar los siguientes comandos como root.
+
 ```
 git clone https://github.com/falconsoft3d/instalar-django-server-easy
 cd instalar-django-server-easy
