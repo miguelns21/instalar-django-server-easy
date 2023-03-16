@@ -98,7 +98,7 @@ echo 'user=$usuario' >> $superapp
 echo 'autostart=true' >> $superapp
 echo 'autorestart=true' >> $superapp
 echo 'redirect_stderr=true' >> $superapp
-echo 'stdout_logfile=/home/$usuario/logs/gunicorn-error.log' >> $superapp
+echo 'stdout_logfile=/home/'$usuario'/logs/gunicorn-error.log' >> $superapp
 sudo cp $superapp /etc/supervisor/conf.d/django_app.conf
 
 echo "==17== Configurando Nginx ==="
