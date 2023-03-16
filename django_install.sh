@@ -68,7 +68,7 @@ echo 'DJANGO_SETTINGS_MODULE='$djapp'.settings' >> /home/$usuario/.venv/bin/guni
 echo 'DJANGO_WSGI_MODULE='$djapp'.wsgi' >> /home/$usuario/.venv/bin/gunicorn_start
 echo 'LOG_LEVEL=error' >> /home/$usuario/.venv/bin/gunicorn_start
 echo '' >> /home/$usuario/.venv/bin/gunicorn_start
-echo 'source /home/$usuario/.venv/bin/activate' >> /home/$usuario/.venv/bin/gunicorn_start
+echo 'source /home/'$usuario'/.venv/bin/activate' >> /home/$usuario/.venv/bin/gunicorn_start
 echo '' >> /home/$usuario/.venv/bin/gunicorn_start
 echo 'export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE' >> /home/$usuario/.venv/bin/gunicorn_start
 echo 'export PYTHONPATH=$DIR:$PYTHONPATH' >> /home/$usuario/.venv/bin/gunicorn_start
