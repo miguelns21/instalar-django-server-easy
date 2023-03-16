@@ -38,7 +38,7 @@ echo "==10== Creamos el entorno virtual === "
 sudo python -m venv /home/django/.venv
 sudo -s source /home/django/.venv/bin/activate
 
-echo "==11== Creamos el entorno virtual === "
+echo "==11== Instalamos django === "
 pip install -q Django
 
 echo "==12== Clonamos el proyecto === "
