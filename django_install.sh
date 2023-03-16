@@ -102,10 +102,10 @@ echo 'stdout_logfile=/home/'$usuario/$project'/logs/gunicorn-error.log' >> $supe
 sudo cp $superapp /etc/supervisor/conf.d/django_app.conf
 
 echo "==17== Configurando Nginx ==="
-ngxapp=/home/$usuario/django_app
+ngxapp=/home/'$usuario'/django_app
 touch $guni
 echo 'upstream django_app {' > $ngxapp
-echo '    server unix:/home/$usuario/gunicorn.sock fail_timeout=0;' >> $ngxapp
+echo '    server unix:/home/'$usuario'/gunicorn.sock fail_timeout=0;' >> $ngxapp
 echo '}' >> $ngxapp
 echo ''  >> $ngxapp
 echo 'server {'  >> $ngxapp
@@ -119,11 +119,11 @@ echo '' >> $ngxapp
 echo '    keepalive_timeout 5;' >> $ngxapp
 echo '    client_max_body_size 4G;' >> $ngxapp
 echo '' >> $ngxapp
-echo '    access_log /home/$usuario/$project/logs/nginx-access.log;' >> $ngxapp
-echo '    error_log /home/$usuario/$project/logs/nginx-error.log;' >> $ngxapp
+echo '    access_log /home/'$usuario'/'$project'/logs/nginx-access.log;' >> $ngxapp
+echo '    error_log /home/'$usuario'/'$project'/logs/nginx-error.log;' >> $ngxapp
 echo '' >> $ngxapp
 echo '    location /static/ {' >> $ngxapp
-echo '        alias /home/$usuario/static/;' >> $ngxapp
+echo '        alias /home/'$usuario'/static/;' >> $ngxapp
 echo '    }' >> $ngxapp
 echo '' >> $ngxapp
 echo '    # checks for static file, if not found proxy to app' >> $ngxapp
