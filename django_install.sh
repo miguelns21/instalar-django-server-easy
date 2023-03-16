@@ -88,7 +88,7 @@ chmod u+x /home/$usuario/.venv/bin/gunicorn_start
 echo "==16== Configurando Supervisor === "
 mkdir /home/$usuario/logs
 touch /home/$usuario/logs/gunicorn-error.log
-touch /etc/supervisor/conf.d/django_app.conf
+sudo touch /etc/supervisor/conf.d/django_app.conf
 echo '[program:django_app]' >> /etc/supervisor/conf.d/django_app.conf
 echo 'command=/home/$usuario/.venv/bin/gunicorn_start' >> /etc/supervisor/conf.d/django_app.conf
 echo 'user=django' >> /etc/supervisor/conf.d/django_app.conf
