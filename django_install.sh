@@ -61,7 +61,7 @@ chmod u+x $guni
 echo '#!/bin/bash' > $guni
 echo '' >> $guni
 echo 'NAME="django_app"' >> $guni
-echo 'DIR=/home/'$usuario'/'$project >> $guni
+echo 'DIR=/home/'$usuario/$project >> $guni
 echo 'USER='$usuario >> $guni
 echo 'GROUP='$usuario >> $guni
 echo 'WORKERS=3' >> $guni
