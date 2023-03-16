@@ -7,7 +7,7 @@ sudo apt-get -qq update
 sudo apt-get -qq upgrade
 
 echo "==3== Instalamos las dependencia para usar PostgreSQL con Python/Django: === "
-sudo apt-get -qq install build-essential libpq-dev python-dev
+sudo apt-get -qq install build-essential libpq-dev
 
 echo "==4== Instalamos PostgreSQL Server: === "
 sudo apt-get -qq install postgresql postgresql-contrib
@@ -23,7 +23,7 @@ sudo systemctl enable supervisor
 sudo systemctl start supervisor
 
 echo "==8== Instalamos python-virtualenv: === "
-sudo apt-get -qq install python-virtualenv
+sudo apt-get -qq install python3-venv
 
 echo "==9== Configuramos PostgreSQL: === "
 sudo su - postgres -c "createuser -s django"
