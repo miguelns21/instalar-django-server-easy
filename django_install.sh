@@ -147,6 +147,7 @@ sudo rm /etc/nginx/sites-enabled/default
 sudo service nginx restart
 
 echo "=== Finalizando ==="
+python /home/$usuario/$project/manage.py makemigrations
 python /home/$usuario/$project/manage.py migrate
 python /home/$usuario/$project/manage.py collectstatic
 sudo chown $usuario:$usuario /home/$usuario/* -R
