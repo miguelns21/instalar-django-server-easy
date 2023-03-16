@@ -5,7 +5,7 @@ Partimos de un VPS o máquina con Ubuntu server instalada.
 Ejecutar los siguientes comandos como root.
 
 ```
-git clone https://github.com/falconsoft3d/instalar-django-server-easy
+git clone https://github.com/miguelns21/instalar-django-server-easy.git
 cd instalar-django-server-easy
 sudo chmod u+x django_install.sh
 ./django_install.sh
