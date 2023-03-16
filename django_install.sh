@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "==1== INICIANDO === "
 sudo ln -svf /usr/bin/python3 /usr/bin/python
-usuario = miguel
+usuario=miguel
 
 echo "==2== Actualizando el Sistema === "
 sudo apt-get -qq update
