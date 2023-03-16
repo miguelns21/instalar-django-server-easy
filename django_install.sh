@@ -73,7 +73,7 @@ echo '' >> /home/$usuario/.venv/bin/gunicorn_start
 echo 'export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE' >> /home/$usuario/.venv/bin/gunicorn_start
 echo 'export PYTHONPATH=$DIR:$PYTHONPATH' >> /home/$usuario/.venv/bin/gunicorn_start
 echo '' >> /home/$usuario/.venv/bin/gunicorn_start
-echo 'exec /home/$usuario/.venv/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \' >> /home/$usuario/.venv/bin/gunicorn_start
+echo 'exec /home/'$usuario'/.venv/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \' >> /home/$usuario/.venv/bin/gunicorn_start
 echo '  --name $NAME \' >> /home/django/.venv/bin/gunicorn_start
 echo '  --workers $WORKERS \' >> /home/$usuario/.venv/bin/gunicorn_start
 echo '  --user=$USER \' >> /home/$usuario/.venv/bin/gunicorn_start
