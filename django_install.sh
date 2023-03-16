@@ -35,8 +35,8 @@ sudo adduser --system --quiet --shell=/bin/bash --home=/home/django --gecos 'dja
 sudo gpasswd -a django sudo
 
 echo "==10== Creamos el entorno virtual === "
-python -m venv /home/django/.venv
-source /home/django/.venv/bin/activate
+sudo python -m venv /home/django/.venv
+sudo source /home/django/.venv/bin/activate
 
 echo "==11== Creamos el entorno virtual === "
 pip install -q Django
