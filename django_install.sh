@@ -7,7 +7,7 @@ sudo apt-get -qq update
 sudo apt-get -qq upgrade
 
 echo "==3== Instalamos las dependencia para usar PostgreSQL con Python/Django: === "
-sudo apt-get -qq install build-essential libpq-dev
+sudo apt-get -qq install build-essential libpq-dev python3-pip
 
 echo "==4== Instalamos PostgreSQL Server: === "
 sudo apt-get -qq install postgresql postgresql-contrib
