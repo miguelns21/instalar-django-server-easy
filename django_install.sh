@@ -93,7 +93,7 @@ touch /home/$usuario/$project/logs/gunicorn-error.log
 superapp=/home/$usuario/django_app.conf
 touch $superapp
 echo '[program:django_app]' >> $superapp
-echo 'command=/home/$usuario/.venv/bin/gunicorn_start' >> $superapp
+echo 'command=/home/'$usuario'/.venv/bin/gunicorn_start' >> $superapp
 echo 'user=$usuario' >> $superapp
 echo 'autostart=true' >> $superapp
 echo 'autorestart=true' >> $superapp
