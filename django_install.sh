@@ -143,6 +143,7 @@ sudo mv $ngxapp /etc/nginx/sites-available
 sudo echo 'from .settings import ALLOWED_HOSTS' >> /home/$usuario/$project/$djapp/localsettings.py
 sudo echo 'ALLOWED_HOSTS += ["'$serverip'"]' >> /home/$usuario/$project/$djapp/localsettings.py
 sudo echo 'STATIC_ROOT = "/home/'$usuario'/static/"' >> /home/$usuario/$project/$djapp/localsettings.py
+sudo echo 'DEBUG = True' >> /home/$usuario/$project/$djapp/localsettings.py
 
 sudo ln -s /etc/nginx/sites-available/django_app /etc/nginx/sites-enabled/django_app
 sudo rm /etc/nginx/sites-enabled/default
