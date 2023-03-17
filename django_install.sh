@@ -140,7 +140,7 @@ echo '    location @proxy_to_app {' >> $ngxapp
 echo '      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;' >> $ngxapp
 echo '      proxy_set_header Host $http_host;' >> $ngxapp
 echo '      proxy_redirect off;' >> $ngxapp
-echo '      proxy_pass http://django_app;' >> $ngxapp
+echo '      proxy_pass http://$project;' >> $ngxapp
 echo '    }' >> $ngxapp
 echo '}' >> $ngxapp
 
