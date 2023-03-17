@@ -103,7 +103,7 @@ sudo mv $superapp /etc/supervisor/conf.d/django_app.conf
 
 
 echo "==17== Configurando Nginx ==="
-ngxapp=/home/'$usuario'/django_app
+ngxapp=/home/$usuario/django_app
 touch $guni
 echo 'upstream django_app {' > $ngxapp
 echo '    server unix:/home/'$usuario'/gunicorn.sock fail_timeout=0;' >> $ngxapp
