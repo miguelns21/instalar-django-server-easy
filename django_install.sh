@@ -54,14 +54,16 @@ pip install -q -r /home/$usuario/$project/requirements.txt
 echo "==14== Instalamos Gunicorn === "
 pip install -q gunicorn
 
-guni=/home/$usuario/.venv/bin/gunicorn_start
+mkdir /home/$usuario/$project/deploy
+guni=/home/$usuario/$project/deploy/gunicorn_start.sh
 
 touch $guni
 chmod u+x $guni
 echo '#!/bin/bash' > $guni
 echo '' >> $guni
-echo 'NAME="django_app"' >> $guni
+echo 'NAME="'$project'"' >> $guni
 echo 'DIR=/home/'$usuario/$project >> $guni
+echo 'LOGDIR=/home/'$usuario/$project/logs/gunicorn.log >> $guni
 echo 'USER='$usuario >> $guni
 echo 'GROUP='$usuario >> $guni
 echo 'WORKERS=3' >> $guni
@@ -82,14 +84,13 @@ echo '  --user=$USER \' >> $guni
 echo '  --group=$GROUP \' >> $guni
 echo '  --bind=$BIND \' >> $guni
 echo '  --log-level=$LOG_LEVEL \' >> $guni
-echo '  --log-file=-' >> $guni
+echo '  --log-file=$LOGDIR' >> $guni
 
 echo "==15== Convertimos a Ejecutable el Fichero: gunicorn_start === "
-chmod u+x /home/$usuario/.venv/bin/gunicorn_start
+chmod u+x /home/$usuario/$project/deploy/gunicorn_start.sh
 
 echo "==16== Configurando Supervisor === "
 mkdir /home/$usuario/$project/logs
-mkdir /home/$usuario/$project/deploy
 touch /home/$usuario/$project/logs/gunicorn-error.log
 touch /home/$usuario/$project/logs/gunicorn-out.log
 
