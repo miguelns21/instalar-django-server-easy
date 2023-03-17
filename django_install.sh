@@ -72,7 +72,7 @@ echo '' >> $guni
 echo 'export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE' >> $guni
 echo 'export PYTHONPATH=$DIR:$PYTHONPATH' >> $guni
 echo '' >> $guni
-echo 'exec /home/'$usuario/$project'/.venv/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \' >>
+echo 'exec /home/'$usuario/$project'/.venv/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \' >> $guni
 echo '  --name $NAME \' >> $guni
 echo '  --workers $WORKERS \' >> $guni
 echo '  --user=$USER \' >> $guni
