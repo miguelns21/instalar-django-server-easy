@@ -41,6 +41,9 @@ echo "==11== Creamos el entorno virtual === "
 python -m venv /home/$usuario/$project/.venv
 source /home/$usuario/$project/.venv/bin/activate
 
+echo "Temporal"
+sudo apt install python3-pip libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0
+
 echo "==12== Instalamos django === "
 pip install -q Django
 
