@@ -57,9 +57,8 @@ touch $guni
 chmod u+x $guni
 echo '#!/bin/bash' > $guni
 echo '' >> $guni
-echo 'NAME="'$project'"' >> $guni
+echo 'NAME="django_app"' >> $guni
 echo 'DIR=/home/'$usuario/$project >> $guni
-echo 'LOGDIR=/home/'$usuario/$project/logs/gunicorn.log >> $guni
 echo 'USER='$usuario >> $guni
 echo 'GROUP='$usuario >> $guni
 echo 'WORKERS=3' >> $guni
@@ -68,19 +67,19 @@ echo 'DJANGO_SETTINGS_MODULE='$djapp'.settings' >> $guni
 echo 'DJANGO_WSGI_MODULE='$djapp'.wsgi' >> $guni
 echo 'LOG_LEVEL=error' >> $guni
 echo '' >> $guni
-echo 'source /home/'$usuario'/.venv/bin/activate' >> $guni
+echo 'source /home/'$usuario/$project'/.venv/bin/activate' >> $guni
 echo '' >> $guni
 echo 'export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE' >> $guni
 echo 'export PYTHONPATH=$DIR:$PYTHONPATH' >> $guni
 echo '' >> $guni
-echo 'exec /home/'$usuario'/.venv/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \' >> $guni
+echo 'exec /home/'$usuario/$project'/.venv/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \' >>
 echo '  --name $NAME \' >> $guni
 echo '  --workers $WORKERS \' >> $guni
 echo '  --user=$USER \' >> $guni
 echo '  --group=$GROUP \' >> $guni
 echo '  --bind=$BIND \' >> $guni
 echo '  --log-level=$LOG_LEVEL \' >> $guni
-echo '  --log-file=$LOGDIR' >> $guni
+echo '  --log-file=-' >> $guni
 
 echo "==15== Convertimos a Ejecutable el Fichero: gunicorn_start === "
 chmod u+x /home/$usuario/$project/deploy/gunicorn_start.sh
