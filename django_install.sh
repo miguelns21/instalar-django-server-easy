@@ -143,6 +143,7 @@ echo '      proxy_redirect off;' >> $ngxapp
 echo '      proxy_pass http://django_app;' >> $ngxapp
 echo '    }' >> $ngxapp
 echo '}' >> $ngxapp
+
 sudo mv $ngxapp /etc/nginx/sites-available/$project
 # Le metemos la IP al settings al final
 sudo echo 'from .settings import ALLOWED_HOSTS' > /home/$usuario/$project/$djapp/production.py
@@ -150,7 +151,7 @@ sudo echo 'ALLOWED_HOSTS += ["'$serverip'"]' >> /home/$usuario/$project/$djapp/p
 sudo echo 'STATIC_ROOT = "/home/'$usuario'/static/"' >> /home/$usuario/$project/$djapp/production.py
 sudo echo 'DEBUG = True' >> /home/$usuario/$project/$djapp/localsettings.py
 
-sudo ln -s /etc/nginx/sites-available/django_app /etc/nginx/sites-enabled/django_app
+sudo ln -s /etc/nginx/sites-available/$project /etc/nginx/sites-enabled/$project
 sudo rm /etc/nginx/sites-enabled/default
 sudo service nginx restart
 
