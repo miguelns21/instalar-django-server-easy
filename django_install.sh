@@ -43,6 +43,7 @@ source /home/$usuario/$project/.venv/bin/activate
 
 echo "Temporal"
 sudo apt install python3-pip libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0
+cp /home/$usuario/$project/deploy/requirements.txt /home/$usuario/$project/requirements.txt
 
 echo "==12== Instalamos django === "
 pip install -q Django
