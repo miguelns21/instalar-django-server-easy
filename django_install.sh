@@ -89,17 +89,22 @@ chmod u+x /home/$usuario/.venv/bin/gunicorn_start
 
 echo "==16== Configurando Supervisor === "
 mkdir /home/$usuario/$project/logs
+mkdir /home/$usuario/$project/deploy
 touch /home/$usuario/$project/logs/gunicorn-error.log
+touch /home/$usuario/$project/logs/gunicorn-out.log
+
 superapp=/home/$usuario/django_app.conf
 touch $superapp
-echo '[program:django_app]' >> $superapp
-echo 'command=/home/'$usuario'/.venv/bin/gunicorn_start' >> $superapp
-echo 'user=$usuario' >> $superapp
+echo '[program:'$project']' >> $superapp
+echo 'directory=/home/'$usuario/$project'/deploy' >> $superapp
+echo 'command=/bin/bash gunicorn_start.sh' >> $superapp
+echo 'user='$usuario >> $superapp
 echo 'autostart=true' >> $superapp
 echo 'autorestart=true' >> $superapp
-echo 'redirect_stderr=true' >> $superapp
-echo 'stdout_logfile=/home/'$usuario/$project'/logs/gunicorn-error.log' >> $superapp
-sudo cp $superapp /etc/supervisor/conf.d/django_app.conf
+echo 'stderr_logfile=/home/'$usuario/$project'/logs/gunicorn-err.log' >> $superapp
+echo 'stdout_logfile=/home/'$usuario/$project'/logs/gunicorn-out.log' >> $superapp
+sudo mv $superapp /etc/supervisor/conf.d/django_app.conf
+
 
 echo "==17== Configurando Nginx ==="
 ngxapp=/home/'$usuario'/django_app
