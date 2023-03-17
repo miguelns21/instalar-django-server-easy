@@ -161,4 +161,4 @@ python /home/$usuario/$project/manage.py collectstatic
 sudo chown $usuario:$usuario /home/$usuario/$project/* -R
 sudo chown $usuario:$usuario /home/$usuario/$project/.venv/* -R
 sudo chown $usuario:$usuario /home/$usuario/$project/.venv -R
-sudo supervisorctl restart django_app
+sudo supervisorctl restart $project'_app'
