@@ -157,7 +157,7 @@ sudo service nginx restart
 echo "=== Finalizando ==="
 python /home/$usuario/$project/manage.py makemigrations
 python /home/$usuario/$project/manage.py migrate
-python /home/$usuario/$project/manage.py collectstatic
+python /home/$usuario/$project/manage.py collectstatic --noinput
 sudo chown $usuario:$usuario /home/$usuario/$project/* -R
 sudo chown $usuario:$usuario /home/$usuario/$project/.venv/* -R
 sudo chown $usuario:$usuario /home/$usuario/$project/.venv -R
