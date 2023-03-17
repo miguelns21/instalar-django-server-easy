@@ -32,7 +32,7 @@ sudo su - postgres -c "createdb django_prod --owner "$usuario
 sudo -u postgres psql -c "ALTER USER $usuario WITH PASSWORD '$usuario'"
 
 echo "==10== Clonamos el proyecto === "
-read -p 'Indique la dirección del repo a clonar (https://github.com/falconsoft3d/django-father>
+read -p 'Indique la dirección del repo a clonar (https://github.com/falconsoft3d/django-father): ' gitrepo
 git -C /home/$usuario clone $gitrepo
 read -p 'Indique la el nombre de la carpeta del proyecto (django-father): ' project
 read -p 'Indique el nombre de la app principal de Django (father): ' djapp
