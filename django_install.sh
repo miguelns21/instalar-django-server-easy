@@ -164,5 +164,5 @@ sudo chown $usuario:$usuario /home/$usuario/$project/.venv -R
 
 sudo supervisorctl reread
 sudo supervisorctl update
-sudo supervisorctl restart $project'_app'
+sudo supervisorctl restart $project
 
