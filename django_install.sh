@@ -50,6 +50,7 @@ pip install -q Django
 
 echo "==13== Instalamos las dependencias === "
 pip install -q -r /home/$usuario/$project/requirements.txt
+pip install psycopg2-binary
 
 echo "==14== Instalamos Gunicorn === "
 pip install -q gunicorn
