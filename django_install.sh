@@ -109,8 +109,8 @@ sudo mv $superapp /etc/supervisor/conf.d/$project'_app.conf'
 echo "==17== Configurando Nginx ==="
 ngxapp=/home/$usuario/django_app
 touch $guni
-echo 'upstream django_app {' > $ngxapp
-echo '    server unix:/home/'$usuario'/gunicorn.sock fail_timeout=0;' >> $ngxapp
+echo 'upstream '$project'conn {' > $ngxapp
+echo '    server unix:/home/'$usuario'/gunicorn-apolo.sock fail_timeout=0;' >> $ngxapp
 echo '}' >> $ngxapp
 echo ''  >> $ngxapp
 echo 'server {'  >> $ngxapp
@@ -143,7 +143,7 @@ echo '      proxy_redirect off;' >> $ngxapp
 echo '      proxy_pass http://django_app;' >> $ngxapp
 echo '    }' >> $ngxapp
 echo '}' >> $ngxapp
-sudo mv $ngxapp /etc/nginx/sites-available
+sudo mv $ngxapp /etc/nginx/sites-available/$project
 # Le metemos la IP al settings al final
 sudo echo 'from .settings import ALLOWED_HOSTS' > /home/$usuario/$project/$djapp/production.py
 sudo echo 'ALLOWED_HOSTS += ["'$serverip'"]' >> /home/$usuario/$project/$djapp/production.py
