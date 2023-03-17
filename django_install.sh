@@ -93,7 +93,7 @@ mkdir /home/$usuario/$project/logs
 touch /home/$usuario/$project/logs/gunicorn-error.log
 touch /home/$usuario/$project/logs/gunicorn-out.log
 
-superapp=/home/$usuario/django_app.conf
+superapp='/home/'$usuario/$project'_app.conf'
 touch $superapp
 echo '[program:'$project']' >> $superapp
 echo 'directory=/home/'$usuario/$project'/deploy' >> $superapp
