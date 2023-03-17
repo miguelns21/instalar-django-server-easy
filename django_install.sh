@@ -108,7 +108,7 @@ sudo mv $superapp /etc/supervisor/conf.d/$project'_app.conf'
 
 echo "==17== Configurando Nginx ==="
 ngxapp=/home/$usuario/django_app
-touch $guni
+touch $ngxapp
 echo 'upstream '$project'conn {' > $ngxapp
 echo '    server unix:/home/'$usuario'/gunicorn-apolo.sock fail_timeout=0;' >> $ngxapp
 echo '}' >> $ngxapp
@@ -140,7 +140,7 @@ echo '    location @proxy_to_app {' >> $ngxapp
 echo '      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;' >> $ngxapp
 echo '      proxy_set_header Host $http_host;' >> $ngxapp
 echo '      proxy_redirect off;' >> $ngxapp
-echo '      proxy_pass http://$project;' >> $ngxapp
+echo '      proxy_pass http://'$project'conn;' >> $ngxapp
 echo '    }' >> $ngxapp
 echo '}' >> $ngxapp
 
@@ -149,7 +149,7 @@ sudo mv $ngxapp /etc/nginx/sites-available/$project
 sudo echo 'from .settings import ALLOWED_HOSTS' > /home/$usuario/$project/$djapp/production.py
 sudo echo 'ALLOWED_HOSTS += ["'$serverip'"]' >> /home/$usuario/$project/$djapp/production.py
 sudo echo 'STATIC_ROOT = "/home/'$usuario'/static/"' >> /home/$usuario/$project/$djapp/production.py
-sudo echo 'DEBUG = True' >> /home/$usuario/$project/$djapp/localsettings.py
+sudo echo 'DEBUG = True' >> /home/$usuario/$project/$djapp/production.py
 
 sudo ln -s /etc/nginx/sites-available/$project /etc/nginx/sites-enabled/$project
 sudo rm /etc/nginx/sites-enabled/default
