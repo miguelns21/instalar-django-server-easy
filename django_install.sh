@@ -64,8 +64,9 @@ touch $guni
 chmod u+x $guni
 echo '#!/bin/bash' > $guni
 echo '' >> $guni
-echo 'NAME="django_app"' >> $guni
-echo 'DIR=/home/'$usuario/$project >> $guni
+echo 'NAME='$project'_app' >> $guni
+echo 'DJANGODIR=/home/'$usuario/$project >> $guni
+echo 'LOGDIR=${DJANGODIR}/logs/gunicorn.log' >> $guni
 echo 'USER='$usuario >> $guni
 echo 'GROUP='$usuario >> $guni
 echo 'WORKERS=3' >> $guni
@@ -86,7 +87,7 @@ echo '  --user=$USER \' >> $guni
 echo '  --group=$GROUP \' >> $guni
 echo '  --bind=$BIND \' >> $guni
 echo '  --log-level=$LOG_LEVEL \' >> $guni
-echo '  --log-file=-' >> $guni
+echo '  --log-file=-$LOGDIR' >> $guni
 
 echo "==15== Convertimos a Ejecutable el Fichero: gunicorn_start === "
 chmod u+x /home/$usuario/$project/deploy/gunicorn_start.sh
