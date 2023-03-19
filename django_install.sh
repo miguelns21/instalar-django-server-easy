@@ -88,6 +88,7 @@ echo '    --group=$GROUP \' >> $guni
 echo '    --log-level=info \' >> $guni
 echo '    --access-logfile=- \' >> $guni
 echo '    --error-logfile=- \' >> $guni
+echo '    --bind unix:/home/'$usuario/$project/$project'.sock \' >> $guni
 echo '    --log-file=$LOGDIR' >> $guni
 echo '' >> $guni
 echo '# Desactivar el entorno virtual de Python' >> $guni
