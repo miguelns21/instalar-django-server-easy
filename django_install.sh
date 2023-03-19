@@ -64,30 +64,34 @@ touch $guni
 chmod u+x $guni
 echo '#!/bin/bash' > $guni
 echo '' >> $guni
-echo 'NAME='$project'_app' >> $guni
-echo 'DJANGODIR=/home/'$usuario/$project >> $guni
+echo 'NAME='$project >> $guni
+echo 'DJANGODIR=/home/'$usuario/$project/ >> $guni
 echo 'LOGDIR=${DJANGODIR}/logs/gunicorn.log' >> $guni
 echo 'USER='$usuario >> $guni
 echo 'GROUP='$usuario >> $guni
-echo 'WORKERS=3' >> $guni
-echo 'BIND=unix:/home/'$usuario'/gunicorn-'$project'.sock' >> $guni
-echo 'DJANGO_SETTINGS_MODULE='$djapp'.settings' >> $guni
-echo 'DJANGO_WSGI_MODULE='$djapp'.wsgi' >> $guni
-echo 'LOG_LEVEL=error' >> $guni
+echo 'NUM_WORKERS=5' >> $guni
 echo '' >> $guni
+echo '# Cambiar al directorio raíz de tu proyecto Django' >> $guni
+echo 'cd $DJANGODIR' >> $guni
+echo '' >> $guni
+echo '# Activar el entorno virtual de Python' >> $guni
 echo 'source /home/'$usuario/$project'/.venv/bin/activate' >> $guni
 echo '' >> $guni
-echo 'export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE' >> $guni
-echo 'export PYTHONPATH=$DIR:$PYTHONPATH' >> $guni
+echo '# Ejecutar gunicorn con la configuración deseada' >> $guni
+echo 'gunicorn '$djapp'.wsgi:application \' >> $guni
+echo '    --name=$NAME \' >> $guni
+echo '    --workers=$NUM_WORKERS \' >> $guni
+echo '    --threads=2 \' >> $guni
+echo '    --bind 0.0.0.0:8000 \ ' >> $guni
+echo '    --user=$USER \' >> $guni
+echo '    --group=$GROUP \' >> $guni
+echo '    --log-level=info \' >> $guni
+echo '    --access-logfile=- \' >> $guni
+echo '    --error-logfile=- \' >> $guni
+echo '    --log-file=$LOGDIR' >> $guni
 echo '' >> $guni
-echo 'exec /home/'$usuario/$project'/.venv/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \' >> $guni
-echo '  --name $NAME \' >> $guni
-echo '  --workers $WORKERS \' >> $guni
-echo '  --user=$USER \' >> $guni
-echo '  --group=$GROUP \' >> $guni
-echo '  --bind=$BIND \' >> $guni
-echo '  --log-level=$LOG_LEVEL \' >> $guni
-echo '  --log-file=-$LOGDIR' >> $guni
+echo '# Desactivar el entorno virtual de Python' >> $guni
+echo 'deactivate' >> $guni
 
 echo "==15== Convertimos a Ejecutable el Fichero: gunicorn_start === "
 chmod u+x /home/$usuario/$project/deploy/gunicorn_start.sh
