@@ -24,6 +24,7 @@ read -p 'Indique la dirección del repo a clonar (https://github.com/falconsoft3
 git -C /home/$usuario clone $gitrepo
 read -p 'Indique la el nombre de la carpeta del proyecto (django-father): ' project
 read -p 'Indique el nombre de la app principal de Django (father): ' djapp
+read -p 'Indique la IP del servidor: ' serverip
 
 echo "==8== Creamos el entorno virtual === "
 python -m venv /home/$usuario/$project/.venv
