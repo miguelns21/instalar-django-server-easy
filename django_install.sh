@@ -56,8 +56,8 @@ echo "==14== Instalamos Gunicorn === "
 pip install -q gunicorn
 
 echo "==15== Creamos el Socket en Systemd === "
-gunisocket=/home/$usuario/$project/deploy/gunicorn_start.sh
-sudo nano $gunisocket
+gunisocket=/etc/systemd/system/gunicorn.socket
+
 echo '[Unit]' > $gunisocket
 echo 'Description=gunicorn socket' >> $gunisocket
 echo '' >> $gunisocket
@@ -68,8 +68,26 @@ echo '[Install]' >> $gunisocket
 echo 'WantedBy=sockets.target' >> $gunisocket
 
 echo "==16== Creamos el servicio Gunicorn en Systemd === "
-sudo nano /etc/systemd/system/gunicorn.service
+guniservice=/etc/systemd/system/gunicorn.service
 
+echo '[Unit]' > $guniservice
+echo 'Description=gunicorn daemon' >> $guniservice
+echo 'Requires=gunicorn.socket' >> $guniservice
+echo 'After=network.target' >> $guniservice
+echo '' >> $guniservice
+echo '[Service]' >> $guniservice
+echo 'User='$usuario >> $guniservice
+echo 'Group='$usuario >> $guniservice
+echo 'WorkingDirectory=/home/'$usuario/$project >> $guniservice
+echo 'ExecStart=/home/'$usuario/$project/'.venv/bin/gunicorn \' >> $guniservice
+echo '          --access-logfile - \' >> $guniservice
+echo '          --error-logfile - \' >> $guniservice
+echo '          --workers 3 \' >> $guniservice
+echo '          --bind unix:/run/gunicorn.sock \' >> $guniservice
+echo '          '$djapp'.wsgi:application' >> $guniservice
+echo '' >> $guniservice
+echo '[Install]' >> $guniservice
+echo 'WantedBy=multi-user.target' >> $guniservice
 
 
 
