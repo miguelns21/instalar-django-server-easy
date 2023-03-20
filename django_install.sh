@@ -84,18 +84,10 @@ echo '[Install]' >> $guniservice
 echo 'WantedBy=multi-user.target' >> $guniservice
 
 echo "==15== Configurando Nginx ==="
-ngxapp=/home/$usuario/django_app
-touch $ngxapp
-echo 'upstream '$project'conn {' > $ngxapp
-echo '    server unix:/home/'$usuario'/gunicorn-apolo.sock fail_timeout=0;' >> $ngxapp
-echo '}' >> $ngxapp
-echo ''  >> $ngxapp
-echo 'server {'  >> $ngxapp
+ngxapp=/etc/nginx/sites-available/$project
+echo 'server {' > $ngxapp
 echo '    listen 80;'  >> $ngxapp
 echo '' >> $ngxapp
-echo '    # add here the ip address of your server'  >> $ngxapp
-echo '    # or a domain pointing to that ip (like example.com or www.example.com)'  >> $ngxapp
-read -p 'Indique la IP del servidor: ' serverip
 echo '    server_name '$serverip';' >> $ngxapp
 echo '' >> $ngxapp
 echo '    keepalive_timeout 5;' >> $ngxapp
@@ -105,28 +97,20 @@ echo '    access_log /home/'$usuario'/'$project'/logs/nginx-access.log;' >> $ngx
 echo '    error_log /home/'$usuario'/'$project'/logs/nginx-error.log;' >> $ngxapp
 echo '' >> $ngxapp
 echo '    location /static/ {' >> $ngxapp
-echo '        alias /home/'$usuario'/static/;' >> $ngxapp
+echo '        alias /home/'$usuario/$project'/staticfiles/;' >> $ngxapp
 echo '    }' >> $ngxapp
 echo '' >> $ngxapp
-echo '    # checks for static file, if not found proxy to app' >> $ngxapp
 echo '    location / {' >> $ngxapp
-echo '        try_files $uri @proxy_to_app;' >> $ngxapp
-echo '    }' >> $ngxapp
-echo '' >> $ngxapp
-echo '    location @proxy_to_app {' >> $ngxapp
-echo '      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;' >> $ngxapp
-echo '      proxy_set_header Host $http_host;' >> $ngxapp
-echo '      proxy_redirect off;' >> $ngxapp
-echo '      proxy_pass http://'$project'conn;' >> $ngxapp
+echo '        include proxy_params;' >> $ngxapp
+echo '        proxy_pass http://unix:/run/gunicorn.sock;' >> $ngxapp
 echo '    }' >> $ngxapp
 echo '}' >> $ngxapp
 
-sudo mv $ngxapp /etc/nginx/sites-available/$project
 # Le metemos la IP al settings al final
 sudo echo 'from .settings import ALLOWED_HOSTS' > /home/$usuario/$project/$djapp/production.py
 sudo echo 'ALLOWED_HOSTS += ["'$serverip'"]' >> /home/$usuario/$project/$djapp/production.py
 sudo echo 'STATIC_ROOT = "/home/'$usuario'/static/"' >> /home/$usuario/$project/$djapp/production.py
-sudo echo 'DEBUG = True' >> /home/$usuario/$project/$djapp/production.py
+sudo echo 'DEBUG = False' >> /home/$usuario/$project/$djapp/production.py
 
 sudo ln -s /etc/nginx/sites-available/$project /etc/nginx/sites-enabled/$project
 sudo rm /etc/nginx/sites-enabled/default
