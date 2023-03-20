@@ -94,26 +94,26 @@ sudo systemctl enable gunicorn.socket
 echo "==15== Configurando Nginx ==="
 ngxapp=/home/$usuario/$project/$project
 
-sudo echo 'server {' > $ngxapp
-sudo echo '    listen 80;'  >> $ngxapp
-sudo echo '' >> $ngxapp
-sudo echo '    server_name '$serverip';' >> $ngxapp
-sudo echo '' >> $ngxapp
-sudo echo '    keepalive_timeout 5;' >> $ngxapp
-sudo echo '    client_max_body_size 4G;' >> $ngxapp
-sudo echo '' >> $ngxapp
-sudo echo '    access_log /home/'$usuario'/'$project'/logs/nginx-access.log;' >> $ngxapp
-sudo echo '    error_log /home/'$usuario'/'$project'/logs/nginx-error.log;' >> $ngxapp
-sudo echo '' >> $ngxapp
-sudo echo '    location /static/ {' >> $ngxapp
-sudo echo '        alias /home/'$usuario/$project'/staticfiles/;' >> $ngxapp
-sudo echo '    }' >> $ngxapp
-sudo echo '' >> $ngxapp
-sudo echo '    location / {' >> $ngxapp
-sudo echo '        include proxy_params;' >> $ngxapp
-sudo echo '        proxy_pass http://unix:/run/gunicorn.sock;' >> $ngxapp
-sudo echo '    }' >> $ngxapp
-sudo echo '}' >> $ngxapp
+echo 'server {' > $ngxapp
+echo '    listen 80;'  >> $ngxapp
+echo '' >> $ngxapp
+echo '    server_name '$serverip';' >> $ngxapp
+echo '' >> $ngxapp
+echo '    keepalive_timeout 5;' >> $ngxapp
+echo '    client_max_body_size 4G;' >> $ngxapp
+echo '' >> $ngxapp
+echo '    access_log /home/'$usuario'/'$project'/logs/nginx-access.log;' >> $ngxapp
+echo '    error_log /home/'$usuario'/'$project'/logs/nginx-error.log;' >> $ngxapp
+echo '' >> $ngxapp
+echo '    location /static/ {' >> $ngxapp
+echo '        alias /home/'$usuario/$project'/staticfiles/;' >> $ngxapp
+echo '    }' >> $ngxapp
+echo '' >> $ngxapp
+echo '    location / {' >> $ngxapp
+echo '        include proxy_params;' >> $ngxapp
+echo '        proxy_pass http://unix:/run/gunicorn.sock;' >> $ngxapp
+echo '    }' >> $ngxapp
+echo '}' >> $ngxapp
 
 sudo mv $ngxapp /etc/nginx/sites-available/$project
 
