@@ -87,6 +87,10 @@ echo 'WantedBy=multi-user.target' >> $guniservice
 
 sudo mv $guniservice /etc/systemd/system/gunicorn.service
 
+sudo systemctl start gunicorn.socket
+sudo systemctl enable gunicorn.socket
+
+
 echo "==15== Configurando Nginx ==="
 ngxapp=/etc/nginx/sites-available/$project
 sudo echo 'server {' > $ngxapp
