@@ -52,59 +52,59 @@ pip install -q gunicorn
 echo "==13== Creamos el Socket en Systemd === "
 gunisocket=/etc/systemd/system/gunicorn.socket
 
-echo '[Unit]' > $gunisocket
-echo 'Description=gunicorn socket' >> $gunisocket
-echo '' >> $gunisocket
-echo '[Socket]' >> $gunisocket
-echo 'ListenStream=/run/gunicorn.sock' >> $gunisocket
-echo '' >> $gunisocket
-echo '[Install]' >> $gunisocket
-echo 'WantedBy=sockets.target' >> $gunisocket
+sudo echo '[Unit]' > $gunisocket
+sudo echo 'Description=gunicorn socket' >> $gunisocket
+sudo echo '' >> $gunisocket
+sudo echo '[Socket]' >> $gunisocket
+sudo echo 'ListenStream=/run/gunicorn.sock' >> $gunisocket
+sudo echo '' >> $gunisocket
+sudo echo '[Install]' >> $gunisocket
+sudo echo 'WantedBy=sockets.target' >> $gunisocket
 
 echo "==14== Creamos el servicio Gunicorn en Systemd === "
 guniservice=/etc/systemd/system/gunicorn.service
 
-echo '[Unit]' > $guniservice
-echo 'Description=gunicorn daemon' >> $guniservice
-echo 'Requires=gunicorn.socket' >> $guniservice
-echo 'After=network.target' >> $guniservice
-echo '' >> $guniservice
-echo '[Service]' >> $guniservice
-echo 'User='$usuario >> $guniservice
-echo 'Group='$usuario >> $guniservice
-echo 'WorkingDirectory=/home/'$usuario/$project >> $guniservice
-echo 'ExecStart=/home/'$usuario/$project/'.venv/bin/gunicorn \' >> $guniservice
-echo '          --access-logfile /home/'$usuario/$project'/logs/gunicorn-access.log \' >> $guniservice
-echo '          --error-logfile /home/'$usuario/$project'/logs/gunicorn-err.log \' >> $guniservice
-echo '          --workers 3 \' >> $guniservice
-echo '          --bind unix:/run/gunicorn.sock \' >> $guniservice
-echo '          '$djapp'.wsgi:application' >> $guniservice
-echo '' >> $guniservice
-echo '[Install]' >> $guniservice
-echo 'WantedBy=multi-user.target' >> $guniservice
+sudo echo '[Unit]' > $guniservice
+sudo echo 'Description=gunicorn daemon' >> $guniservice
+sudo echo 'Requires=gunicorn.socket' >> $guniservice
+sudo echo 'After=network.target' >> $guniservice
+sudo echo '' >> $guniservice
+sudo echo '[Service]' >> $guniservice
+sudo echo 'User='$usuario >> $guniservice
+sudo echo 'Group='$usuario >> $guniservice
+sudo echo 'WorkingDirectory=/home/'$usuario/$project >> $guniservice
+sudo echo 'ExecStart=/home/'$usuario/$project/'.venv/bin/gunicorn \' >> $guniservice
+sudo echo '          --access-logfile /home/'$usuario/$project'/logs/gunicorn-access.log \' >> $guniservice
+sudo echo '          --error-logfile /home/'$usuario/$project'/logs/gunicorn-err.log \' >> $guniservice
+sudo echo '          --workers 3 \' >> $guniservice
+sudo echo '          --bind unix:/run/gunicorn.sock \' >> $guniservice
+sudo echo '          '$djapp'.wsgi:application' >> $guniservice
+sudo echo '' >> $guniservice
+sudo echo '[Install]' >> $guniservice
+sudo echo 'WantedBy=multi-user.target' >> $guniservice
 
 echo "==15== Configurando Nginx ==="
 ngxapp=/etc/nginx/sites-available/$project
-echo 'server {' > $ngxapp
-echo '    listen 80;'  >> $ngxapp
-echo '' >> $ngxapp
-echo '    server_name '$serverip';' >> $ngxapp
-echo '' >> $ngxapp
-echo '    keepalive_timeout 5;' >> $ngxapp
-echo '    client_max_body_size 4G;' >> $ngxapp
-echo '' >> $ngxapp
-echo '    access_log /home/'$usuario'/'$project'/logs/nginx-access.log;' >> $ngxapp
-echo '    error_log /home/'$usuario'/'$project'/logs/nginx-error.log;' >> $ngxapp
-echo '' >> $ngxapp
-echo '    location /static/ {' >> $ngxapp
-echo '        alias /home/'$usuario/$project'/staticfiles/;' >> $ngxapp
-echo '    }' >> $ngxapp
-echo '' >> $ngxapp
-echo '    location / {' >> $ngxapp
-echo '        include proxy_params;' >> $ngxapp
-echo '        proxy_pass http://unix:/run/gunicorn.sock;' >> $ngxapp
-echo '    }' >> $ngxapp
-echo '}' >> $ngxapp
+sudo echo 'server {' > $ngxapp
+sudo echo '    listen 80;'  >> $ngxapp
+sudo echo '' >> $ngxapp
+sudo echo '    server_name '$serverip';' >> $ngxapp
+sudo echo '' >> $ngxapp
+sudo echo '    keepalive_timeout 5;' >> $ngxapp
+sudo echo '    client_max_body_size 4G;' >> $ngxapp
+sudo echo '' >> $ngxapp
+sudo echo '    access_log /home/'$usuario'/'$project'/logs/nginx-access.log;' >> $ngxapp
+sudo echo '    error_log /home/'$usuario'/'$project'/logs/nginx-error.log;' >> $ngxapp
+sudo echo '' >> $ngxapp
+sudo echo '    location /static/ {' >> $ngxapp
+sudo echo '        alias /home/'$usuario/$project'/staticfiles/;' >> $ngxapp
+sudo echo '    }' >> $ngxapp
+sudo echo '' >> $ngxapp
+sudo echo '    location / {' >> $ngxapp
+sudo echo '        include proxy_params;' >> $ngxapp
+sudo echo '        proxy_pass http://unix:/run/gunicorn.sock;' >> $ngxapp
+sudo echo '    }' >> $ngxapp
+sudo echo '}' >> $ngxapp
 
 # Le metemos la IP al settings al final
 sudo echo 'from .settings import ALLOWED_HOSTS' > /home/$usuario/$project/$djapp/production.py
