@@ -16,23 +16,16 @@ sudo apt-get -qq install postgresql postgresql-contrib
 echo "==5== Instalamos Nginx: === "
 sudo apt-get -qq install nginx
 
-echo "==6== Instalamos Supervisor: === "
-sudo apt-get -qq install supervisor
-
-echo "==7== Iniciamos Supervisor: === "
-sudo systemctl enable supervisor
-sudo systemctl start supervisor
-
-echo "==8== Instalamos python3-venv y pip: === "
+echo "==6== Instalamos python3-venv y pip: === "
 sudo apt-get -qq install python3-venv python3-pip
 
-echo "==9== Clonamos el proyecto === "
+echo "==7== Clonamos el proyecto === "
 read -p 'Indique la dirección del repo a clonar (https://github.com/falconsoft3d/django-father): ' gitrepo
 git -C /home/$usuario clone $gitrepo
 read -p 'Indique la el nombre de la carpeta del proyecto (django-father): ' project
 read -p 'Indique el nombre de la app principal de Django (father): ' djapp
 
-echo "==10== Creamos el entorno virtual === "
+echo "==8== Creamos el entorno virtual === "
 python -m venv /home/$usuario/$project/.venv
 source /home/$usuario/$project/.venv/bin/activate
 
@@ -40,22 +33,22 @@ echo "Temporal"
 sudo apt install python3-pip libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0
 cp /home/$usuario/$project/deploy/requirements.txt /home/$usuario/$project/requirements.txt
 
-echo "==11== Instalamos django === "
+echo "==9== Instalamos django === "
 pip install -q Django
 
-echo "==12== Instalamos las dependencias === "
+echo "==10== Instalamos las dependencias === "
 pip install -q -r /home/$usuario/$project/requirements.txt
 pip install psycopg2-binary
 
-echo "==13== Configuramos PostgreSQL: === "
+echo "==11== Configuramos PostgreSQL: === "
 sudo su - postgres -c "createuser -s "$usuario
 sudo su - postgres -c "createdb '$project' --owner "$usuario
 sudo -u postgres psql -c "ALTER USER $usuario WITH PASSWORD '$usuario'"
 
-echo "==14== Instalamos Gunicorn === "
+echo "==12== Instalamos Gunicorn === "
 pip install -q gunicorn
 
-echo "==15== Creamos el Socket en Systemd === "
+echo "==13== Creamos el Socket en Systemd === "
 gunisocket=/etc/systemd/system/gunicorn.socket
 
 echo '[Unit]' > $gunisocket
@@ -67,7 +60,7 @@ echo '' >> $gunisocket
 echo '[Install]' >> $gunisocket
 echo 'WantedBy=sockets.target' >> $gunisocket
 
-echo "==16== Creamos el servicio Gunicorn en Systemd === "
+echo "==14== Creamos el servicio Gunicorn en Systemd === "
 guniservice=/etc/systemd/system/gunicorn.service
 
 echo '[Unit]' > $guniservice
@@ -80,8 +73,8 @@ echo 'User='$usuario >> $guniservice
 echo 'Group='$usuario >> $guniservice
 echo 'WorkingDirectory=/home/'$usuario/$project >> $guniservice
 echo 'ExecStart=/home/'$usuario/$project/'.venv/bin/gunicorn \' >> $guniservice
-echo '          --access-logfile - \' >> $guniservice
-echo '          --error-logfile - \' >> $guniservice
+echo '          --access-logfile /home/'$usuario/$project'/logs/gunicorn-access.log \' >> $guniservice
+echo '          --error-logfile /home/'$usuario/$project'/logs/gunicorn-err.log \' >> $guniservice
 echo '          --workers 3 \' >> $guniservice
 echo '          --bind unix:/run/gunicorn.sock \' >> $guniservice
 echo '          '$djapp'.wsgi:application' >> $guniservice
@@ -89,28 +82,7 @@ echo '' >> $guniservice
 echo '[Install]' >> $guniservice
 echo 'WantedBy=multi-user.target' >> $guniservice
 
-
-
-
-echo "==16== Configurando Supervisor === "
-mkdir /home/$usuario/$project/logs
-touch /home/$usuario/$project/logs/gunicorn-error.log
-touch /home/$usuario/$project/logs/gunicorn-out.log
-
-superapp='/home/'$usuario/$project'_app.conf'
-touch $superapp
-echo '[program:'$project']' >> $superapp
-echo 'directory=/home/'$usuario/$project'/deploy' >> $superapp
-echo 'command=/bin/bash gunicorn_start.sh' >> $superapp
-echo 'user='$usuario >> $superapp
-echo 'autostart=true' >> $superapp
-echo 'autorestart=true' >> $superapp
-echo 'stderr_logfile=/home/'$usuario/$project'/logs/gunicorn-err.log' >> $superapp
-echo 'stdout_logfile=/home/'$usuario/$project'/logs/gunicorn-out.log' >> $superapp
-sudo mv $superapp /etc/supervisor/conf.d/$project'_app.conf'
-
-
-echo "==17== Configurando Nginx ==="
+echo "==15== Configurando Nginx ==="
 ngxapp=/home/$usuario/django_app
 touch $ngxapp
 echo 'upstream '$project'conn {' > $ngxapp
