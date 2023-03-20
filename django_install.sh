@@ -92,7 +92,8 @@ sudo systemctl enable gunicorn.socket
 
 
 echo "==15== Configurando Nginx ==="
-ngxapp=/etc/nginx/sites-available/$project
+ngxapp=/home/$usuario/$project/$project
+
 sudo echo 'server {' > $ngxapp
 sudo echo '    listen 80;'  >> $ngxapp
 sudo echo '' >> $ngxapp
@@ -113,6 +114,8 @@ sudo echo '        include proxy_params;' >> $ngxapp
 sudo echo '        proxy_pass http://unix:/run/gunicorn.sock;' >> $ngxapp
 sudo echo '    }' >> $ngxapp
 sudo echo '}' >> $ngxapp
+
+sudo mv $ngxapp /etc/nginx/sites-available/$project
 
 # Le metemos la IP al settings al final
 sudo echo 'from .settings import ALLOWED_HOSTS' > /home/$usuario/$project/$djapp/production.py
