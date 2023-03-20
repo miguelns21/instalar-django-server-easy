@@ -52,50 +52,27 @@ sudo su - postgres -c "createuser -s "$usuario
 sudo su - postgres -c "createdb '$project' --owner "$usuario
 sudo -u postgres psql -c "ALTER USER $usuario WITH PASSWORD '$usuario'"
 
-
-
 echo "==14== Instalamos Gunicorn === "
 pip install -q gunicorn
 
-mkdir /home/$usuario/$project/deploy
-guni=/home/$usuario/$project/deploy/gunicorn_start.sh
+echo "==15== Creamos el Socket en Systemd === "
+gunisocket=/home/$usuario/$project/deploy/gunicorn_start.sh
+sudo nano $gunisocket
+echo '[Unit]' > $gunisocket
+echo 'Description=gunicorn socket' >> $gunisocket
+echo '' >> $gunisocket
+echo '[Socket]' >> $gunisocket
+echo 'ListenStream=/run/gunicorn.sock' >> $gunisocket
+echo '' >> $gunisocket
+echo '[Install]' >> $gunisocket
+echo 'WantedBy=sockets.target' >> $gunisocket
 
-touch $guni
-chmod u+x $guni
-echo '#!/bin/bash' > $guni
-echo '' >> $guni
-echo 'NAME='$project >> $guni
-echo 'DJANGODIR=/home/'$usuario/$project/ >> $guni
-echo 'LOGDIR=${DJANGODIR}/logs/gunicorn.log' >> $guni
-echo 'USER='$usuario >> $guni
-echo 'GROUP='$usuario >> $guni
-echo 'NUM_WORKERS=5' >> $guni
-echo '' >> $guni
-echo '# Cambiar al directorio raíz de tu proyecto Django' >> $guni
-echo 'cd $DJANGODIR' >> $guni
-echo '' >> $guni
-echo '# Activar el entorno virtual de Python' >> $guni
-echo 'source /home/'$usuario/$project'/.venv/bin/activate' >> $guni
-echo '' >> $guni
-echo '# Ejecutar gunicorn con la configuración deseada' >> $guni
-echo 'gunicorn '$djapp'.wsgi:application \' >> $guni
-echo '    --name=$NAME \' >> $guni
-echo '    --workers=$NUM_WORKERS \' >> $guni
-echo '    --threads=2 \' >> $guni
-echo '    --bind 0.0.0.0:8000 \ ' >> $guni
-echo '    --user=$USER \' >> $guni
-echo '    --group=$GROUP \' >> $guni
-echo '    --log-level=info \' >> $guni
-echo '    --access-logfile=- \' >> $guni
-echo '    --error-logfile=- \' >> $guni
-echo '    --bind unix:/home/'$usuario/$project/$project'.sock \' >> $guni
-echo '    --log-file=$LOGDIR' >> $guni
-echo '' >> $guni
-echo '# Desactivar el entorno virtual de Python' >> $guni
-echo 'deactivate' >> $guni
+echo "==16== Creamos el servicio Gunicorn en Systemd === "
+sudo nano /etc/systemd/system/gunicorn.service
 
-echo "==15== Convertimos a Ejecutable el Fichero: gunicorn_start === "
-chmod u+x /home/$usuario/$project/deploy/gunicorn_start.sh
+
+
+
 
 echo "==16== Configurando Supervisor === "
 mkdir /home/$usuario/$project/logs
